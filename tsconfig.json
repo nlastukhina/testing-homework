@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "types": ["cypress", "cypress-file-upload"],
+    "lib": [
+      "dom",
+      "es2017",
+      "dom.iterable",
+      "webworker"
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@features/*": ["features/*"],
+      "@app/*": ["app/*"],
+      "@images/*": ["images/*"]
+    },
+    "resolveJsonModule": true,
+    "sourceMap": true
+  },
+  "include": ["src", "jest-setup.ts", "cypress/**/*.ts"],
+  "exclude": ["node_modules", "dist", "src/features/serviceWorker"]
+}

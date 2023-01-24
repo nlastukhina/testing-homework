@@ -1,0 +1,53 @@
+stages:
+  - test
+  - build
+  - deploy
+
+code_quality:
+  image: node:14.17.4
+  stage: test
+  before_script:
+    - npm ci
+  script:
+    - npm run eslint
+    - npm run stylelint
+    - npm run prettier-check
+  only:
+    - merge_requests
+
+test:
+  image: node:14.17.4
+  stage: test
+  allow_failure: true
+  before_script:
+    - npm ci
+  script:
+    - npm run test
+  only:
+    - merge_requests
+
+build:
+  image: node:14.17.4
+  stage: build
+  before_script:
+    - npm ci
+  script:
+    - npm run build
+  after_script:
+    - find . -type f -iname \*.map -delete
+  artifacts:
+    paths:
+      - dist
+  only:
+    - merge_requests
+    - master
+
+pages:
+  stage: deploy
+  script:
+    - cp -r dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
